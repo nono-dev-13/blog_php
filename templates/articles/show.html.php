@@ -10,8 +10,7 @@
     <p class="mb-3"><small class="text-muted">Ecrit le <?= date('d-M-Y',strtotime($article['created_at'])); ?></small></p>
     <h5><?= $article['sub_title'] ?></h5>
     <p><?= $article['content'] ?></p>
-    
-
+         
     <?php if (count($commentaires) === 0) : ?>
         <h5 class="mb-3">Il n'y a pas encore de commentaires pour cet article</h5>
     <?php else : ?>
@@ -19,14 +18,14 @@
         <?php foreach ($commentaires as $commentaire) : ?>
             <div class="mb-4">
                 <div class="d-flex align-items-center justify-content-between">
-                    <h5>Commentaire de <?= $commentaire['author'] ?></h5>
+                    <h5>Commentaire de <?= $commentaire->getAuthor() ?></h5>
                     <?php if(isset($_SESSION['user'])): ?>
-                    <a href="index.php?page=delete-comment&id=<?= $commentaire['id'] ?>" onclick="return window.confirm(`Êtes vous sûr de vouloir supprimer ce commentaire ?!`)">Supprimer</a>
+                    <a href="index.php?page=delete-comment&id=<?= $commentaire->getId()?>" onclick="return window.confirm(`Êtes vous sûr de vouloir supprimer ce commentaire ?!`)">Supprimer</a>
                     <?php endif; ?>
                 </div>
-                <small>Le <?= date('d-M-Y',strtotime($commentaire['created_at'])); ?></small>
+                <small>Le <?= $commentaire->getCreatedAtFr() ?></small>
                 <blockquote>
-                    <em><?= $commentaire['content'] ?></em>
+                    <em><?= $commentaire->getContent() ?></em>
                 </blockquote>
                 <hr>
             </div>

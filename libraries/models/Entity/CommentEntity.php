@@ -1,7 +1,7 @@
 <?php
 namespace Models\Entity;
 
-class ArticleEntity
+class CommentEntity
 {
     private $id;
     private $author;
@@ -9,7 +9,14 @@ class ArticleEntity
     private $created_at;
     private $article_id;
     
-    
+    public function hydrate($item)
+    {
+        $this->setId($item['id']);
+        $this->setAuthor($item['author']);
+        $this->setContent($item['content']);
+        $this->setCreatedAt($item['created_at']);
+        $this->setArticleId($item['article_id']);
+    }
 
     public function getId(){
         return $this->id;
@@ -39,6 +46,11 @@ class ArticleEntity
         return $this->created_at;
     }
 
+    public function getCreatedAtFr()
+    {
+        return date('d-M-Y',strtotime($this->getCreatedAt()));
+    }
+
     public function setCreatedAt($created_at){
         $this->created_at = $created_at;
     }
@@ -47,7 +59,7 @@ class ArticleEntity
         return $this->article_id;
     }
 
-    public function setSubTitle($article_id){
+    public function setArticleId($article_id){
         $this->article_id = $article_id;
     }
 }

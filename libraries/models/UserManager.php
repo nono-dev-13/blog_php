@@ -6,7 +6,7 @@ class UserManager extends ModelManager
 {
     protected $table = 'users';
 
-    public function insertUser(string $username, string $email, string $pass):void
+    public function insertUser(string $username, string $email, string $pass):int
     {
         $sql = "INSERT INTO {$this->table} (username,email,pass) VALUES(:username, :email, :pass)";
         $query = $this->pdo->prepare($sql);
@@ -16,6 +16,8 @@ class UserManager extends ModelManager
             $arr = $query->errorInfo();
             print_r($arr);
         }
+
+        return $this->lastInsertIdUser();
     }
 
     public function getUserByEmail(string $email)
@@ -30,7 +32,7 @@ class UserManager extends ModelManager
 
     public function lastInsertIdUser()
     {
-        $this->pdo->lastInsertId();
+        return $this->pdo->lastInsertId();
     }
 
 }

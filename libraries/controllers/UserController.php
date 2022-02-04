@@ -98,10 +98,10 @@ class UserController extends Controller
                 //hascher le mot de passe
                 $password = password_hash($pass, PASSWORD_ARGON2ID);
 
-                $this->model->insertUser($pseudo, $email, $password);
+                $id = $this->model->insertUser($pseudo, $email, $password);
 
                 //récupère l'id du nouvel utilisateur
-                $id = $this->model->lastInsertIdUser();
+                //$id = $this->model->lastInsertIdUser();
                 
                 // on connecte l'utilisateur
                 $_SESSION["user"] = [

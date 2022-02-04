@@ -1,9 +1,11 @@
 <?php 
 namespace Models;
 
+use Models\Entity\CommentEntity;
+
 class CommentManager extends ModelManager
 {
-    protected $table = 'comments';
+    protected $table = 'comment';
 
     public function findAllWithArticle(int $article_id):array
     {
@@ -11,7 +13,16 @@ class CommentManager extends ModelManager
         $query->execute(['article_id' => $article_id]);
         $commentaires = $query->fetchAll();
 
-        return $commentaires;
+        $listeComments = [];
+        $entityName = 'models\\Entity\\'. ucfirst($this->table) .'Entity';
+        echo "$entityName";
+        foreach($commentaires as $commentaire){
+            $comment = new $entityName();
+            $comment->hydrate($commentaire);
+            $listeComments[] = $comment;
+        }
+
+        return $listeComments;
     }
 
     public function insert(string $author, string $content, int $article_id):void

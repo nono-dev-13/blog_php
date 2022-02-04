@@ -9,6 +9,14 @@ class ArticleEntity
     private $content;
     private $created_at;
 
+    public function hydrate($item)
+    {
+        $this->setId($item['id']);
+        $this->setTitle($item['title']);
+        $this->setSubTitle($item['sub_title']);
+        $this->setCreatedAt($item['created_at']);
+    }
+
     public function getId(){
         return $this->id;
     }

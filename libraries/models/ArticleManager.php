@@ -4,11 +4,11 @@ namespace Models;
 
 class ArticleManager extends ModelManager
 {
-    protected $table = 'articles';
+    protected $table = 'article';
 
     public function insert(string $title,string $sub_title,string $content)
     {
-        $sql = "INSERT INTO articles (title, sub_title, content) VALUES (:title, :sub_title, :content)";
+        $sql = "INSERT INTO article (title, sub_title, content) VALUES (:title, :sub_title, :content)";
         $query = $this->pdo->prepare($sql);
 
         if (!$query->execute(compact('title', 'sub_title', 'content'))) {
@@ -20,7 +20,7 @@ class ArticleManager extends ModelManager
 
     public function update(int $id, string $title, string $subtitle, string $content)
     {
-       $sql = "UPDATE articles SET title = :title, sub_title = :subtitle, content = :content WHERE id = :id";
+       $sql = "UPDATE article SET title = :title, sub_title = :subtitle, content = :content WHERE id = :id";
        $query = $this->pdo->prepare($sql);
        
 

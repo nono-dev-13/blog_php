@@ -1,6 +1,8 @@
 <?php 
 namespace Models;
 
+use Models\Entity\ArticleEntity;
+
 //juste une idée, une représentation, on ne veut pas qu'on l'utilise, qu'on l'instancie
 abstract class ModelManager
 {
@@ -42,6 +44,15 @@ abstract class ModelManager
         $resultats = $this->pdo->query($sql);
         // On fouille le résultat pour en extraire les données réelles
         $items = $resultats->fetchAll();
-        return $items;
+        
+        $listeEntity = [];
+        $entityName = 'Models\\Entity\\'. ucfirst($this->table) .'Entity';
+        echo "$entityName";
+        foreach($items as $item){
+            $entity = new $entityName();
+            $entity->hydrate($item);
+            $listeEntity[] = $entity;
+        }
+        return $listeEntity;
     }
 }
