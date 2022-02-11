@@ -10,6 +10,8 @@
         $_SESSION['error'] = "";
     }
 
+    var_dump($_SESSION['user']);
+
     ?>
     <div class="d-flex align-items-center justify-content-between">
         <h1><?= $article->getTitle() ?></h1>

@@ -30,12 +30,18 @@
                         <a class="nav-link" href="index.php?page=register">S'inscrire</a>
                     </li>
                 <?php else: ?>
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.php?page=management">Gestion</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.php?page=logout">Se déconnecter</a>
-                    </li>
+                    <?php if(($_SESSION['user']['role'] == 1)): ?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.php?page=management">Gestion</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.php?page=logout">Se déconnecter</a>
+                        </li>
+                    <?php else: ?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.php?page=logout">Se déconnecter</a>
+                        </li>
+                    <?php endif; ?>
                 <?php endif; ?>
             </ul>
         </div>

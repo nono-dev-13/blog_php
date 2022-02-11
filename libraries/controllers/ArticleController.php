@@ -5,6 +5,7 @@ namespace Controllers;
 use Exception;
 use Models\ArticleManager;
 use Models\CommentManager;
+use Models\UserManager;
 
 class ArticleController
 {
@@ -12,7 +13,6 @@ class ArticleController
 
     public function index()
     {
-        
         /**
          * 2. Récupération des articles
          */

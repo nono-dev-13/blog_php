@@ -1,4 +1,14 @@
 <div class="container">
+    <?php
+    if(!empty($_SESSION['error'])) {
+        echo '<div class="col-12">
+                    <div class="alert alert-danger" role="alert">
+                        '. $_SESSION['error'] .'
+                    </div>
+            </div>';
+        $_SESSION['error'] = "";
+    }
+    ?>
     <div class="row">
         <div class="col-12 col-lg-4 offset-lg-4">
             <main class="mt-5 mb-5">

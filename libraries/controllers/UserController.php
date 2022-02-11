@@ -3,6 +3,7 @@
 namespace Controllers;
 
 use Exception;
+use Models\UserManager;
 
 class UserController extends Controller
 {
@@ -22,19 +23,22 @@ class UserController extends Controller
         
                 //vérifier si l'email est bien un email
                 if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
-                    die("l'adresse email n'est pas bonne");
+                    $_SESSION['error'] = "'adresse email n'est pas bonne";
                 }
 
-                $user = $this->model->getUserByEmail($email);
+                $userModel = new UserManager();
+                $user = $userModel->getUserByEmail($email);
 
                 //est ce l'email existe dans la bdd
                 if(!$user){
                     $_SESSION['error'] = "l'utilisateur et/ou l'email n'existe pas";
+                    \Http::redirect('index.php?page=login');
                 }
 
                 //on a un user existant, je peux vérif son mot de pass
                 if(!password_verify($pass, $user["pass"])){
                     $_SESSION['error'] = "l'utilisateur et/ou l'email n'existe pas";
+                    \Http::redirect('index.php?page=login');
                 }
 
                 //Ici l'utilisateur et le mot de passe sont corrects
@@ -42,14 +46,19 @@ class UserController extends Controller
                 //on va stocker dans $_SESSION les infos de l'utilisateur
 
                 $_SESSION["user"] = [
-                    "id" => $user["id"],
-                    "pseudo" => $user["username"],
-                    "email" => $user["email"]
+                    "id"        =>  $user["id"],
+                    "pseudo"    =>  $user["username"],
+                    "email"     =>  $user["email"],
+                    "role"      =>  $user["role"]
                 ];
                 
-        
-                //on peut rediriger vers la page de management
-                \Http::redirect('index.php?page=management');
+                if($user["role"] == 1){
+                    //on peut rediriger vers la page de management
+                    \Http::redirect('index.php?page=management');
+                } else {
+                    \Http::redirect('index.php?page=home');
+                }
+                
             
             } else {
                 $_SESSION['error'] = 'Le formulaire est incomplet';
@@ -98,7 +107,8 @@ class UserController extends Controller
                 //hascher le mot de passe
                 $password = password_hash($pass, PASSWORD_ARGON2ID);
 
-                $id = $this->model->insertUser($pseudo, $email, $password);
+                $userModel = new UserManager();
+                $id = $userModel->insertUser($pseudo, $email, $password);
 
                 //récupère l'id du nouvel utilisateur
                 //$id = $this->model->lastInsertIdUser();

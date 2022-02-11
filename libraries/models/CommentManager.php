@@ -15,7 +15,7 @@ class CommentManager extends ModelManager
 
         $listeComments = [];
         $entityName = 'models\\Entity\\'. ucfirst($this->table) .'Entity';
-        echo "$entityName";
+        //echo "$entityName";
         foreach($commentaires as $commentaire){
             $comment = new $entityName();
             $comment->hydrate($commentaire);
