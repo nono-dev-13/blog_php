@@ -1,15 +1,26 @@
 
 <section class="container">
+    <?php
+    if(!empty($_SESSION['error'])) {
+        echo '<div class="col-12">
+                    <div class="alert alert-danger" role="alert">
+                        '. $_SESSION['error'] .'
+                    </div>
+            </div>';
+        $_SESSION['error'] = "";
+    }
+
+    ?>
     <div class="d-flex align-items-center justify-content-between">
-        <h1><?= $article['title'] ?></h1>
+        <h1><?= $article->getTitle() ?></h1>
         <?php if(isset($_SESSION['user'])): ?>
-        <a href="index.php?page=edit-article&id=<?= $article['id'] ?>" class="btn btn-outline-primary">Modifier l'article</a>
+        <a href="index.php?page=edit-article&id=<?= $article->getId() ?>" class="btn btn-outline-primary">Modifier l'article</a>
         <?php endif; ?>
     </div>
     
-    <p class="mb-3"><small class="text-muted">Ecrit le <?= date('d-M-Y',strtotime($article['created_at'])); ?></small></p>
-    <h5><?= $article['sub_title'] ?></h5>
-    <p><?= $article['content'] ?></p>
+    <p class="mb-3"><small class="text-muted">Ecrit le <?= date('d-M-Y',strtotime($article->getCreatedAt())); ?></small></p>
+    <h5><?= $article->getSubTitle() ?></h5>
+    <p><?= $article->getContent() ?></p>
          
     <?php if (count($commentaires) === 0) : ?>
         <h5 class="mb-3">Il n'y a pas encore de commentaires pour cet article</h5>

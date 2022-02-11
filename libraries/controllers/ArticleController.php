@@ -3,10 +3,12 @@
 namespace Controllers;
 
 use Exception;
+use Models\ArticleManager;
+use Models\CommentManager;
 
-class ArticleController extends Controller
+class ArticleController
 {
-    protected $modelName = \Models\ArticleManager::class;
+    
 
     public function index()
     {
@@ -14,8 +16,8 @@ class ArticleController extends Controller
         /**
          * 2. Récupération des articles
          */
-        
-        $articles = $this->model->findAll('created_at DESC');
+        $articleModel = new ArticleManager();
+        $articles = $articleModel->findAll();
         
         /**
          * 3. Affichage
@@ -43,27 +45,21 @@ class ArticleController extends Controller
             
         }
 
-        $commentModel = new \Models\CommentManager();
-
         /**
          * 3. Récupération de l'article en question
          * On va ici utiliser une requête préparée car elle inclue une variable qui provient de l'utilisateur : Ne faites
          * jamais confiance à ce connard d'utilisateur ! :D
          */
-
-        $article = $this->model->find($article_id);
-
+        $articleModel = new ArticleManager();
+        $article = $articleModel->find($article_id);
+        $pageTitle = $article->getTitle();
+        
         /**
          * 4. Récupération des commentaires de l'article en question
          * Pareil, toujours une requête préparée pour sécuriser la donnée filée par l'utilisateur (cet enfoiré en puissance !)
          */
-
-        $commentaires = $commentModel->findAllWithArticle($article_id);
-
-        /**
-         * 5. On affiche 
-         */
-        $pageTitle = $article['title'];
+        $commentModel = new CommentManager();
+        $commentaires = $commentModel->findAll($article_id);
 
         /*
         render('articles/show', [
@@ -91,7 +87,8 @@ class ArticleController extends Controller
         /**
          * 3. Vérification que l'article existe bel et bien
          */
-        $article = $this->model->find($id);
+         $articleModel = new ArticleManager();
+         $article = $articleModel->find($id);
         if (!$article) {
             $_SESSION['error'] = "L'article $id n'existe pas, vous ne pouvez donc pas le supprimer !";
         }
@@ -99,7 +96,7 @@ class ArticleController extends Controller
         /**
          * 4. Réelle suppression de l'article
          */
-        $this->model->delete($id);
+        $articleModel->delete($id);
 
         /**
          * 5. Redirection vers la page d'accueil
@@ -126,7 +123,8 @@ class ArticleController extends Controller
                 $subtitle = strip_tags($_POST['subtitle']);
                 $content = htmlspecialchars($_POST['content']);
 
-                $this->model->insert($title, $subtitle,$content);
+                $articleModel = new ArticleManager();
+                $articleModel->insert($title, $subtitle,$content);
 
                 $_SESSION['success'] = 'Article ajouté';
                 \Http::redirect("index.php?page=management");
@@ -160,7 +158,8 @@ class ArticleController extends Controller
                 //neutralise toute balise de contenu
                 $content = htmlspecialchars($_POST['content']);
                 
-                $this->model->update($id,$title,$subtitle,$content);
+                $articleModel = new ArticleManager();
+                $articleModel->update($id,$title,$subtitle,$content);
 
                 $_SESSION['success'] = 'Article mis à jour';
                 \Http::redirect("index.php?page=management");
@@ -176,8 +175,8 @@ class ArticleController extends Controller
             \Http::redirect("index.php?page=home");
         }
 
-
-        $article = $this->model->find($id);
+        $articleModel = new ArticleManager();
+        $article = $articleModel->find($id);
 
         //on vérifie si article est vide
         
@@ -198,8 +197,8 @@ class ArticleController extends Controller
         /**
          * 2. Récupération des articles
          */
-        
-        $articles = $this->model->findAll('created_at DESC');
+        $articleModel = new ArticleManager();
+        $articles = $articleModel->findAll();
         
         /**
          * 3. Affichage

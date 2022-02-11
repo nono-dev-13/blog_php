@@ -28,11 +28,11 @@
                 <tbody id="tbody">
                     <?php foreach($articles as $article): ?>
                         <tr>
-                            <th scope="row"><?php echo $article['id'] ?></th>
-                            <td class="_title"><?php echo $article['title'] ?></td>
-                            <td><?php echo date('d-M-Y',strtotime($article['created_at'])); ?></td>
-                            <td><a href="index.php?page=edit-article&id=<?= $article['id'] ?>"><i class="far fa-edit"></i></a></td>
-                            <td><p style="cursor: pointer;" class="_modal" data-bs-toggle="modal" data-bs-target="#modalDelete" data-id="<?php echo ($article["id"]) ?>">
+                            <th scope="row"><?php echo $article->getId() ?></th>
+                            <td class="_title"><?php echo $article->getTitle() ?></td>
+                            <td><?php echo date('d-M-Y',strtotime($article->getCreatedAt())); ?></td>
+                            <td><a href="index.php?page=edit-article&id=<?= $article->getId() ?>"><i class="far fa-edit"></i></a></td>
+                            <td><p style="cursor: pointer;" class="_modal" data-bs-toggle="modal" data-bs-target="#modalDelete" data-id="<?php echo ($article->getId()) ?>">
                                     <i class="far fa-trash-alt"></i>
                                 </p>
                             </td>

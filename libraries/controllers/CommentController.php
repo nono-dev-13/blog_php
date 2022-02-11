@@ -2,7 +2,10 @@
 
 namespace Controllers;
 
-class CommentController extends Controller
+use Models\ArticleManager;
+use Models\CommentManager;
+
+class CommentController
 {
     protected $modelName = \Models\CommentManager::class;
     
@@ -36,21 +39,21 @@ class CommentController extends Controller
         // Vérification finale des infos envoyées dans le formulaire (donc dans le POST)
         // Si il n'y a pas d'auteur OU qu'il n'y a pas de contenu OU qu'il n'y a pas d'identifiant d'article
         if (!$author || !$article_id || !$content) {
-            die("Votre formulaire a été mal rempli !");
+            $_SESSION['error']="Votre formulaire a été mal rempli !";
+        } else {
+
+            $articleModel = new ArticleManager();
+            $article = $articleModel->find($article_id);
+            
+            // Si rien n'est revenu, on fait une erreur
+            if (!$article) {
+                $_SESSION['error']= "Ho ! L'article $article_id n'existe pas boloss !";
+            }
+
+            // 3. Insertion du commentaire
+            $commentModel = new CommentManager();
+            $commentModel->insert($author, $content, $article_id);
         }
-
-        $modelArticle = new \Models\ArticleManager();
-
-        $article = $modelArticle->find($article_id);
-
-        // Si rien n'est revenu, on fait une erreur
-        if (!$article) {
-            die("Ho ! L'article $article_id n'existe pas boloss !");
-        }
-
-        // 3. Insertion du commentaire
-        $this->model->insert($author, $content, $article_id);
-
         // 4. Redirection vers l'article en question :
 
         \Http::redirect('index.php?page=article&id=' . $article_id);
@@ -62,7 +65,7 @@ class CommentController extends Controller
          * 1. Récupération du paramètre "id" en GET
          */
         if (empty($_GET['id']) || !ctype_digit($_GET['id'])) {
-            die("Ho ! Fallait préciser le paramètre id en GET !");
+            $_SESSION['error'] = "Ho ! Fallait préciser le paramètre id en GET !";
         }
 
         $id = $_GET['id'];
@@ -70,9 +73,10 @@ class CommentController extends Controller
         /**
          * 3. Vérification de l'existence du commentaire
          */
-        $commentaire = $this->model->find($id);
+        $commentModel = new CommentManager();
+        $commentaire = $commentModel->find($id);
         if (!$commentaire) {
-            die("Aucun commentaire n'a l'identifiant $id !");
+            $_SESSION['error']="Aucun commentaire n'a l'identifiant $id !";
         }
 
         /**
@@ -80,8 +84,8 @@ class CommentController extends Controller
          * On récupère l'identifiant de l'article avant de supprimer le commentaire
          */
         $article_id = $commentaire['article_id'];
-
-        $this->model->delete($id);
+        
+        $commentModel->delete($id);
 
         /**
          * 5. Redirection vers l'article en question
