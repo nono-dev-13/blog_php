@@ -52,7 +52,7 @@ class UserController extends Controller
                     "role"      =>  $user["role"]
                 ];
                 
-                if($user["role"] == 1){
+                if($user["role"] == 2){
                     //on peut rediriger vers la page de management
                     \Http::redirect('index.php?page=management');
                 } else {

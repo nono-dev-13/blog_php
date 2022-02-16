@@ -30,7 +30,7 @@
                         <a class="nav-link" href="index.php?page=register">S'inscrire</a>
                     </li>
                 <?php else: ?>
-                    <?php if(($_SESSION['user']['role'] == 1)): ?>
+                    <?php if($_SESSION['user']['role'] == 2): ?>
                         <li class="nav-item">
                             <a class="nav-link" href="index.php?page=management">Gestion</a>
                         </li>

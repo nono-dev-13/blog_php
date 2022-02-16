@@ -10,13 +10,13 @@
         $_SESSION['error'] = "";
     }
 
-    var_dump($_SESSION['user']);
-
     ?>
     <div class="d-flex align-items-center justify-content-between">
         <h1><?= $article->getTitle() ?></h1>
         <?php if(isset($_SESSION['user'])): ?>
-        <a href="index.php?page=edit-article&id=<?= $article->getId() ?>" class="btn btn-outline-primary">Modifier l'article</a>
+            <?php if($_SESSION['user']['role'] == 2): ?>
+                <a href="index.php?page=edit-article&id=<?= $article->getId() ?>" class="btn btn-outline-primary">Modifier l'article</a>
+            <?php endif; ?>
         <?php endif; ?>
     </div>
     
@@ -33,7 +33,9 @@
                 <div class="d-flex align-items-center justify-content-between">
                     <h5>Commentaire de <?= $commentaire->getAuthor() ?></h5>
                     <?php if(isset($_SESSION['user'])): ?>
-                    <a href="index.php?page=delete-comment&id=<?= $commentaire->getId()?>" onclick="return window.confirm(`Êtes vous sûr de vouloir supprimer ce commentaire ?!`)">Supprimer</a>
+                        <?php if($_SESSION['user']['role'] == 2): ?>
+                            <a href="index.php?page=delete-comment&id=<?= $commentaire->getId()?>" onclick="return window.confirm(`Êtes vous sûr de vouloir supprimer ce commentaire ?!`)">Supprimer</a>
+                        <?php endif; ?>        
                     <?php endif; ?>
                 </div>
                 <small>Le <?= $commentaire->getCreatedAtFr() ?></small>
@@ -46,19 +48,26 @@
     <?php endif ?>
     
     
+    <?php if(isset($_SESSION['user'])): ?>
+        <form action="index.php?page=save-comment" method="POST">
+            <h5 class="mb-3">Envoyez vos commentaires</h5>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" name="author" id="floatingInput" placeholder="Votre pseudo">
+                <label for="floatingInput">Votre pseudo</label>
+            </div>
+            
+            <div class="form-floating mb-3">
+                <textarea class="form-control" name="content" placeholder="Votre commentaire" id="floatingTextarea"></textarea>
+                <label for="floatingTextarea">Votre commentaire</label>
+            </div>
+            <input type="hidden" name="article_id" value="<?= $article_id ?>">
+            <button type="submit" class="btn btn-primary">Commenter !</button>
+        </form>
+    <?php else: ?>
+        <div>
+            <p>Pour commenter cet article vous devez être <a href="index.php?page=login">connecter</a></p>
+        </div>
+    <?php endif ?>
 
-    <form action="index.php?page=save-comment" method="POST">
-        <h5 class="mb-3">Envoyez vos commentaires</h5>
-        <div class="form-floating mb-3">
-            <input type="text" class="form-control" name="author" id="floatingInput" placeholder="Votre pseudo">
-            <label for="floatingInput">Votre pseudo</label>
-        </div>
-        
-        <div class="form-floating mb-3">
-            <textarea class="form-control" name="content" placeholder="Votre commentaire" id="floatingTextarea"></textarea>
-            <label for="floatingTextarea">Votre commentaire</label>
-        </div>
-        <input type="hidden" name="article_id" value="<?= $article_id ?>">
-        <button type="submit" class="btn btn-primary">Commenter !</button>
-    </form>
+    
 </section>

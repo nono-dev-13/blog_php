@@ -11,7 +11,7 @@
     ?>
     <div class="row">
         <div class="col-12 col-lg-4 offset-lg-4">
-            <main class="mt-5 mb-5">
+            <main class="mt-5 mb-2">
                 <form method="post">
                     <h1 class="h3 mb-3 fw-normal">Connexion</h1>
                     
@@ -26,6 +26,7 @@
                     <button class="w-100 btn btn-lg btn-primary" type="submit">Me connecter</button>
                 </form>
             </main>
+            <p class="mb-5">Pas encore inscrit ?, <a href="index.php?page=register">me créer un compte</a></p>
         </div>
     </div>
 </div>
