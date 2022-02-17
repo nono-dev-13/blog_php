@@ -18,9 +18,9 @@
                 </div>';
             $_SESSION['success'] = "";
         }
-        
-        if(!empty($article)){
         ?>
+        
+        <?php if(!empty($article)): ?>
         <div class="col-12 col-lg-6 offset-lg-3">
             <form method="post">
                 <div class="mb-3">
@@ -39,10 +39,8 @@
                 <button type="submit" class="btn btn-primary">Modifier</button>
             </form>
         </div>
-        <?php
-        } else {
-            echo "cet article n'existe pas";
-        }
-        ?>
+        <?php else: ?>
+            <p>Cet article n'existe pas</p>
+        <?php endif; ?>
     </div>
 </section>

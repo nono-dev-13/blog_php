@@ -26,7 +26,7 @@
                     <button class="w-100 btn btn-lg btn-primary" type="submit">Me connecter</button>
                 </form>
             </main>
-            <p class="mb-5">Pas encore inscrit ?, <a href="index.php?page=register">me créer un compte</a></p>
+            <p class="mb-5">Pas encore inscrit ?<a href="index.php?page=register"> me créer un compte</a></p>
         </div>
     </div>
 </div>

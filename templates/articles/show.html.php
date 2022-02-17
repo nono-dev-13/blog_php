@@ -10,7 +10,18 @@
         $_SESSION['error'] = "";
     }
 
+    if(!empty($_SESSION['success'])) {
+        echo '<div class="col-12">
+                    <div class="alert alert-success" role="alert">
+                        '. $_SESSION['success'] .'
+                    </div>
+            </div>';
+        $_SESSION['success'] = "";
+    }
+
     ?>
+    <a href="index.php?page=home" class="btn btn-primary mb-3">Retour liste Article</a>
+    
     <div class="d-flex align-items-center justify-content-between">
         <h1><?= $article->getTitle() ?></h1>
         <?php if(isset($_SESSION['user'])): ?>
@@ -27,23 +38,24 @@
     <?php if (count($commentaires) === 0) : ?>
         <h5 class="mb-3">Il n'y a pas encore de commentaires pour cet article</h5>
     <?php else : ?>
-        <h5>Il y a déjà <?= count($commentaires) ?> réactions : </h5>
         <?php foreach ($commentaires as $commentaire) : ?>
-            <div class="mb-4">
-                <div class="d-flex align-items-center justify-content-between">
-                    <h5>Commentaire de <?= $commentaire->getAuthor() ?></h5>
-                    <?php if(isset($_SESSION['user'])): ?>
-                        <?php if($_SESSION['user']['role'] == 2): ?>
-                            <a href="index.php?page=delete-comment&id=<?= $commentaire->getId()?>" onclick="return window.confirm(`Êtes vous sûr de vouloir supprimer ce commentaire ?!`)">Supprimer</a>
-                        <?php endif; ?>        
-                    <?php endif; ?>
+            <?php if($commentaire->getStatus() == 1): ?>
+                <div class="mb-4">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <h5>Commentaire de <?= $commentaire->getAuthor() ?></h5>
+                        <?php if(isset($_SESSION['user'])): ?>
+                            <?php if($_SESSION['user']['role'] == 2): ?>
+                                <a href="index.php?page=delete-comment&id=<?= $commentaire->getId()?>" onclick="return window.confirm(`Êtes vous sûr de vouloir supprimer ce commentaire ?!`)">Supprimer</a>
+                            <?php endif; ?>        
+                        <?php endif; ?>
+                    </div>
+                    <small>Le <?= $commentaire->getCreatedAtFr() ?></small>
+                    <blockquote>
+                        <em><?= $commentaire->getContent() ?></em>
+                    </blockquote>
+                    <hr>
                 </div>
-                <small>Le <?= $commentaire->getCreatedAtFr() ?></small>
-                <blockquote>
-                    <em><?= $commentaire->getContent() ?></em>
-                </blockquote>
-                <hr>
-            </div>
+            <?php endif ?>
         <?php endforeach ?>
     <?php endif ?>
     

@@ -42,6 +42,14 @@ try{
         $controllerComment->save();
         break;
 
+        case 'valid-comment' :
+        $controllerComment->validation();
+        break;
+
+        case 'refuse-comment' :
+        $controllerComment->reject();
+        break;
+
         case 'delete-comment' :
         $controllerComment->delete();
         break;

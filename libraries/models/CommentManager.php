@@ -25,6 +25,16 @@ class CommentManager extends ModelManager
         return $listeComments;
     }
 
+    public function findAllBack()
+    {
+        $sql = "SELECT * FROM {$this->table} ORDER BY created_at desc LIMIT 5";
+        $query = $this->pdo->prepare($sql);
+        $query->execute();
+
+        $listCommentsEntity = $query->fetchAll(\PDO::FETCH_CLASS, '\\models\\Entity\\CommentEntity');
+        return $listCommentsEntity;
+    }
+
     public function insert(string $author, string $content, int $article_id):void
     {
         $sql = "INSERT INTO {$this->table} SET author = :author, content = :content, article_id = :article_id, created_at = NOW()";
@@ -49,5 +59,31 @@ class CommentManager extends ModelManager
     {
         $query = $this->pdo->prepare("DELETE FROM {$this->table} WHERE id = :id");
         $query->execute(['id' => $id]);
+    }
+
+    public function validate(int $id, int $status)
+    {
+       $sql = "UPDATE {$this->table} SET status = :status + 1 WHERE id = :id";
+       $query = $this->pdo->prepare($sql);
+       
+
+       if (!$query->execute(compact('status', 'id'))) {
+           echo "\nPDOStatement::errorInfo():\n";
+           $arr = $query->errorInfo();
+           print_r($arr);
+       } 
+    }
+
+    public function refuse(int $id, int $status)
+    {
+       $sql = "UPDATE {$this->table} SET status = :status + 2 WHERE id = :id";
+       $query = $this->pdo->prepare($sql);
+       
+
+       if (!$query->execute(compact('status', 'id'))) {
+           echo "\nPDOStatement::errorInfo():\n";
+           $arr = $query->errorInfo();
+           print_r($arr);
+       } 
     }
 }

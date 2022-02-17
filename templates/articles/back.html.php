@@ -14,7 +14,7 @@
         <div class="col-12 mb-3">
             <h5>Bonjour <?= $_SESSION["user"]["pseudo"] ?> , bienvenue dans la partie administration du blog</h5>
         </div>
-        <div class="col-12">
+        <div class="col-6">
             <table class="table table-striped mb-3">
                 <thead>
                     <tr>
@@ -41,6 +41,32 @@
                 </tbody>
             </table>
             <a href="index.php?page=add-article" class="btn btn-primary">Ajouter un article <i class="far fa-plus-square"></i></a>
+        </div>
+        <div class="col-6">
+            <table class="table table-striped mb-3">
+                <thead>
+                    <tr>
+                        <th scope="col">id</th>
+                        <th scope="col">commentaire</th>
+                        <th scope="col">created_at</th>
+                        <th scope="col">valider</th>
+                        <th scope="col">rejeter</th>
+                        <th scope="col">status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach($comments as $comment): ?>
+                        <tr>
+                            <th scope="row"><?php echo $comment->getId() ?></th>
+                            <td><?php echo $comment->getContent() ?></td>
+                            <td><?php echo date('d-M-Y',strtotime($comment->getCreatedAt())); ?></td>
+                            <td><a href="index.php?page=valid-comment&id=<?= $comment->getId() ?>"><i class="fa fa-check" aria-hidden="true"></i></a></td>
+                            <td><a href="index.php?page=refuse-comment&id=<?= $comment->getId() ?>"><i class="fa fa-times" aria-hidden="true"></i></a></td>
+                            <td><?php echo $comment->getStatus() ?></td>
+                        </tr>
+                    <?php endforeach ?>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

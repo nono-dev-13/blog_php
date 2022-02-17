@@ -8,6 +8,7 @@ class CommentEntity
     private $content;
     private $created_at;
     private $article_id;
+    private $status;
     
     public function hydrate($item)
     {
@@ -16,6 +17,7 @@ class CommentEntity
         $this->setContent($item['content']);
         $this->setCreatedAt($item['created_at']);
         $this->setArticleId($item['article_id']);
+        $this->setStatus($item['status']);
     }
 
     public function getId(){
@@ -61,5 +63,13 @@ class CommentEntity
 
     public function setArticleId($article_id){
         $this->article_id = $article_id;
+    }
+
+    public function getStatus(){
+        return $this->status;
+    }
+
+    public function setStatus($status){
+        $this->status = $status;
     }
 }

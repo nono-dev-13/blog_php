@@ -199,11 +199,17 @@ class ArticleController
          */
         $articleModel = new ArticleManager();
         $articles = $articleModel->findAll();
+
+        /**
+         * 3. Récupération des commentaires
+         */
+        $commentModel = new CommentManager();
+        $comments = $commentModel->findAllBack();
         
         /**
          * 3. Affichage
          */
         $pageTitle = "Accueil";
-        \Renderer::render('articles/back',compact('pageTitle','articles'));
+        \Renderer::render('articles/back',compact('pageTitle','articles','comments'));
     }
 }

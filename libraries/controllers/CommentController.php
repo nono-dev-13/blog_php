@@ -53,6 +53,8 @@ class CommentController
             // 3. Insertion du commentaire
             $commentModel = new CommentManager();
             $commentModel->insert($author, $content, $article_id);
+
+            $_SESSION['success']= "Votre commentaire à bien été pris en compte, en cours de validation";
         }
         // 4. Redirection vers l'article en question :
 
@@ -92,5 +94,31 @@ class CommentController
          */
 
         \Http::redirect("index.php?page=article&id=" . $article_id);
+    }
+
+    public function validation()
+    {
+        //?? conditions au cas ou ya rien
+        $id = $_GET["id"] ?? null;
+        $status = 0;
+
+        $commentModel = new CommentManager();
+        $commentModel->validate($id,$status);
+
+        $_SESSION['success'] = 'commentaire accepté';
+        \Http::redirect("index.php?page=management");
+    }
+
+    public function reject()
+    {
+        //?? conditions au cas ou ya rien
+        $id = $_GET["id"] ?? null;
+        $status = 0;
+
+        $commentModel = new CommentManager();
+        $commentModel->refuse($id,$status);
+
+        $_SESSION['success'] = 'commentaire refusé';
+        \Http::redirect("index.php?page=management");
     }
 }
