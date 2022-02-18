@@ -36,6 +36,8 @@ class CommentController
             $article_id = strip_tags($_POST['article_id']);
         }
 
+        $user_id = $_SESSION['user']['id'];
+
         // Vérification finale des infos envoyées dans le formulaire (donc dans le POST)
         // Si il n'y a pas d'auteur OU qu'il n'y a pas de contenu OU qu'il n'y a pas d'identifiant d'article
         if (!$author || !$article_id || !$content) {
@@ -52,7 +54,7 @@ class CommentController
 
             // 3. Insertion du commentaire
             $commentModel = new CommentManager();
-            $commentModel->insert($author, $content, $article_id);
+            $commentModel->insert($author, $content, $article_id,$user_id);
 
             $_SESSION['success']= "Votre commentaire à bien été pris en compte, en cours de validation";
         }
