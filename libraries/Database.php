@@ -1,9 +1,4 @@
 <?php
-//constantes environnement
-define("DBHOST", "localhost:8889");
-define("DBUSER", "root");
-define("DBPASS", "root");
-define("DBNAME", "blogpoo");
  
 class Database 
 {

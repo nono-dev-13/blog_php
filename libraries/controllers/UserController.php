@@ -118,7 +118,7 @@ class UserController extends Controller
                     "id" => $id,
                     "pseudo" => $pseudo,
                     "email" => $email,
-                    "role" => 1
+                    "role" => ROLE_USER
                 ];
                 
                 \Http::redirect('index.php?page=home');

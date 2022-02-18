@@ -61,22 +61,9 @@ class CommentManager extends ModelManager
         $query->execute(['id' => $id]);
     }
 
-    public function validate(int $id, int $status)
+    public function updateValidation(int $id, int $status)
     {
-       $sql = "UPDATE {$this->table} SET status = :status + 1 WHERE id = :id";
-       $query = $this->pdo->prepare($sql);
-       
-
-       if (!$query->execute(compact('status', 'id'))) {
-           echo "\nPDOStatement::errorInfo():\n";
-           $arr = $query->errorInfo();
-           print_r($arr);
-       } 
-    }
-
-    public function refuse(int $id, int $status)
-    {
-       $sql = "UPDATE {$this->table} SET status = :status + 2 WHERE id = :id";
+       $sql = "UPDATE {$this->table} SET status = :status WHERE id = :id";
        $query = $this->pdo->prepare($sql);
        
 

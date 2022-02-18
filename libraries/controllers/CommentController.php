@@ -100,10 +100,9 @@ class CommentController
     {
         //?? conditions au cas ou ya rien
         $id = $_GET["id"] ?? null;
-        $status = 0;
 
         $commentModel = new CommentManager();
-        $commentModel->validate($id,$status);
+        $commentModel->updateValidation($id,COMMENTAIRE_VALID);
 
         $_SESSION['success'] = 'commentaire accepté';
         \Http::redirect("index.php?page=management");
@@ -113,10 +112,9 @@ class CommentController
     {
         //?? conditions au cas ou ya rien
         $id = $_GET["id"] ?? null;
-        $status = 0;
 
         $commentModel = new CommentManager();
-        $commentModel->refuse($id,$status);
+        $commentModel->updateValidation($id,COMMENTAIRE_INVALID);
 
         $_SESSION['success'] = 'commentaire refusé';
         \Http::redirect("index.php?page=management");

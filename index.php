@@ -1,5 +1,6 @@
 <?php
 session_start();
+require_once('libraries/config.php');
 require_once('libraries/autoload.php');
 try{
     $controllerArticle = new \Controllers\ArticleController();
@@ -8,7 +9,67 @@ try{
     $controllerContact = new \Controllers\ContactController();
 
     $page = $_REQUEST['page'] ?? 'accueil';
+    
+    // on définit la variable
+    $role = -1;
 
+    if(isset($_SESSION['user'])) {
+        $role = $_SESSION['user']['role'];
+    }
+    
+
+    if($role == ROLE_ADMIN) {
+        switch($page) {
+    
+            case 'management' :
+            $controllerArticle->back();
+            break;
+        
+            case 'add-article' :
+            $controllerArticle->add();
+            break;
+        
+            case 'edit-article' :
+            $controllerArticle->edit();
+            break;
+    
+            case 'delete-article' :
+            $controllerArticle->delete();
+            break;
+        
+            case 'save-comment' :
+            $controllerComment->save();
+            break;
+    
+            case 'valid-comment' :
+            $controllerComment->validation();
+            break;
+    
+            case 'refuse-comment' :
+            $controllerComment->reject();
+            break;
+    
+            case 'delete-comment' :
+            $controllerComment->delete();
+            break;
+    
+        
+        }
+    }
+
+    if($role == ROLE_USER || $role == ROLE_ADMIN) {
+        switch($page) {
+        
+            case 'save-comment' :
+            $controllerComment->save();
+            break;
+
+            case 'logout' :
+            $controllerUser->logout();
+            break;
+        }
+    }
+    
     switch($page) {
         case 'accueil' :
         $controllerContact->acceuilContact();
@@ -17,53 +78,21 @@ try{
         case 'home' :
         $controllerArticle->index();
         break;
-    
-        case 'management' :
-        $controllerArticle->back();
-        break;
-    
-        case 'add-article' :
-        $controllerArticle->add();
-        break;
-    
-        case 'edit-article' :
-        $controllerArticle->edit();
-        break;
 
-        case 'delete-article' :
-        $controllerArticle->delete();
-        break;
-    
         case 'article' :
         $controllerArticle->show();
-        break;
-    
-        case 'save-comment' :
-        $controllerComment->save();
-        break;
-
-        case 'valid-comment' :
-        $controllerComment->validation();
-        break;
-
-        case 'refuse-comment' :
-        $controllerComment->reject();
-        break;
-
-        case 'delete-comment' :
-        $controllerComment->delete();
         break;
 
         case 'login' :
         $controllerUser->login();
         break;
 
-        case 'logout' :
-        $controllerUser->logout();
-        break;
-
         case 'register' :
         $controllerUser->register();
+        break;
+
+        default : 
+        $controllerContact->acceuilContact();
         break;
     }
 

@@ -184,7 +184,6 @@ class ArticleController
         if(!$article){
             throw new Exception("cet article n'existe pas");
         }
-        
 
         \Renderer::render('articles/editArticle',[
             'article' => $article

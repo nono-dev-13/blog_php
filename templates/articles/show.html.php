@@ -39,12 +39,12 @@
         <h5 class="mb-3">Il n'y a pas encore de commentaires pour cet article</h5>
     <?php else : ?>
         <?php foreach ($commentaires as $commentaire) : ?>
-            <?php if($commentaire->getStatus() == 1): ?>
+            <?php if($commentaire->getStatus() == ROLE_USER): ?>
                 <div class="mb-4">
                     <div class="d-flex align-items-center justify-content-between">
                         <h5>Commentaire de <?= $commentaire->getAuthor() ?></h5>
                         <?php if(isset($_SESSION['user'])): ?>
-                            <?php if($_SESSION['user']['role'] == 2): ?>
+                            <?php if($_SESSION['user']['role'] == ROLE_ADMIN): ?>
                                 <a href="index.php?page=delete-comment&id=<?= $commentaire->getId()?>" onclick="return window.confirm(`Êtes vous sûr de vouloir supprimer ce commentaire ?!`)">Supprimer</a>
                             <?php endif; ?>        
                         <?php endif; ?>
