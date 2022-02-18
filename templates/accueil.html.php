@@ -19,6 +19,12 @@
                 $_SESSION['success'] = "";
             }
         ?>
+        <div class="col-12 col-lg-6 offset-lg-3 mb-5">
+            <div class="d-flex align-items-center jusfify-content-center">
+                <h4>Boubli Arnaud, 40 ans developpeur front chez Infostrates à Marseille</h4>
+                <a href="cv.pdf" class="btn btn-primary" target="_blank">CV</a>
+            </div>
+        </div>
         <div class="col-12 col-lg-6 offset-lg-3">
             <form id="form" enctype="multipart/form-data" method="post">
                 <h3>Contactez moi</h3>

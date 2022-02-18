@@ -117,11 +117,11 @@ class UserController extends Controller
                 $_SESSION["user"] = [
                     "id" => $id,
                     "pseudo" => $pseudo,
-                    "email" => $email
+                    "email" => $email,
+                    "role" => 1
                 ];
                 
-                //on peut rediriger vers la page de management
-                \Http::redirect('index.php?page=management');
+                \Http::redirect('index.php?page=home');
             
             } else {
                 $_SESSION['error'] = 'Le formulaire est incomplet';
