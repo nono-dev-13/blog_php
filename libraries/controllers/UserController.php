@@ -12,7 +12,7 @@ class UserController extends Controller
     public function login()
     {
         if(isset($_SESSION["user"])){
-            \Http::redirect('index.php?page=management');
+            \Http::redirect('index.php?page=accueil');
         }
 
         if(!empty($_POST)){
@@ -86,7 +86,7 @@ class UserController extends Controller
     public function register()
     {
         if(isset($_SESSION["user"])){
-            \Http::redirect('index.php?page=management');
+            \Http::redirect('index.php?page=accueil');
         }
 
         if(!empty($_POST)){

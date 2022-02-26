@@ -17,8 +17,10 @@ try{
         $role = $_SESSION['user']['role'];
     }
     
-
+    $pageTrouve = false; 
+    
     if($role == ROLE_ADMIN) {
+        $pageTrouve = true; 
         switch($page) {
     
             case 'management' :
@@ -52,49 +54,62 @@ try{
             case 'delete-comment' :
             $controllerComment->delete();
             break;
-    
+                
+            default : $pageTrouve = false;
         
         }
     }
+    
+    if($pageTrouve == false) {
+        
+        if($role == ROLE_USER || $role == ROLE_ADMIN) {
+            $pageTrouve = true;
+            switch($page) {
+            
+                case 'save-comment' :
+                $controllerComment->save();
+                break;
+    
+                case 'logout' :
+                $controllerUser->logout();
+                break;
 
-    if($role == ROLE_USER || $role == ROLE_ADMIN) {
+                default : $pageTrouve = false;
+            }
+        }
+    }
+    
+    if($pageTrouve == false) {
+        $pageTrouve = true;
         switch($page) {
-        
-            case 'save-comment' :
-            $controllerComment->save();
+            case 'accueil' :
+            $controllerContact->acceuilContact();
+            break;
+    
+            case 'home' :
+            $controllerArticle->index();
+            break;
+    
+            case 'article' :
+            $controllerArticle->show();
+            break;
+    
+            case 'login' :
+            $controllerUser->login();
+            break;
+    
+            case 'register' :
+            $controllerUser->register();
             break;
 
-            case 'logout' :
-            $controllerUser->logout();
-            break;
+            default : $pageTrouve = false;
         }
     }
+
+    if($pageTrouve == false) {
+        echo "$page n'est pas valid";
+    }    
     
-    switch($page) {
-        case 'accueil' :
-        $controllerContact->acceuilContact();
-        break;
-
-        case 'home' :
-        $controllerArticle->index();
-        break;
-
-        case 'article' :
-        $controllerArticle->show();
-        break;
-
-        case 'login' :
-        $controllerUser->login();
-        break;
-
-        case 'register' :
-        $controllerUser->register();
-        break;
-
-        default : 
-        $controllerContact->acceuilContact();
-        break;
-    }
 
 } catch(Exception $e){
     echo $e->getMessage();

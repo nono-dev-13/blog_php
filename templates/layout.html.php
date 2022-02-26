@@ -9,7 +9,6 @@
     <script src="https://kit.fontawesome.com/e2e1e6b876.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-
     <title>Blog - <?= $pageTitle ?></title>
 </head>
 
@@ -22,10 +21,10 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                <?php if(!isset($_SESSION['user'])): ?>
                     <li class="nav-item">
                         <a class="nav-link" href="index.php?page=home">Les articles</a>
                     </li>
+                <?php if(!isset($_SESSION['user'])): ?>
                     <li class="nav-item">
                         <a class="nav-link" href="index.php?page=login">Se connecter</a>
                     </li>

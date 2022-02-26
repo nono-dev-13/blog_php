@@ -20,9 +20,14 @@
             }
         ?>
         <div class="col-12 col-lg-6 offset-lg-3 mb-5">
-            <div class="d-flex align-items-center jusfify-content-center">
+            <div class="d-flex align-items-center jusfify-content-center mb-3">
                 <h4>Boubli Arnaud, 40 ans developpeur front chez Infostrates à Marseille</h4>
-                <a href="cv.pdf" class="btn btn-primary" target="_blank">CV</a>
+                <a href="cv.pdf" class="btn btn-primary" style="margin-right: 10px;" target="_blank">CV</a>
+                <a target="_blank" href="https://github.com/nono-dev-13/" style="margin-right: 10px;"><i class="fab fa-github fa-lg"></i></a>
+                <a target="_blank" href="https://www.linkedin.com/in/arnaud-boubli/"><i class="fab fa-linkedin fa-lg"></i></a>
+            </div>
+            <div>
+                <img src="./asset/img/arnaud.jpg" alt="arnaud" style="width: 150px;">
             </div>
         </div>
         <div class="col-12 col-lg-6 offset-lg-3">
